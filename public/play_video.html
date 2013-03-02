@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+    <meta charset="utf-8">
+<title>VideoShare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VideoShare, html5, angularjs, nodejs, mongodb, couchdb">
+    <meta name="author" content="Bruno Bonnin">
+    
+    <!-- Le styles -->
+    <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+    body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+    .table-video td {
+        vertical-align : middle;
+    }
+    </style>
+    <link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    
+    <script src="lib/jquery/jquery.js"></script>
+    <script src="lib/jquery/jquery.cookie.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/videoshare.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        updateVideo();        
+        createWebSocket();
+    });
+    </script>
+</head>
+
+<body ng-controller="VideoPlayController">
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="index.html"><i class="icon-film icon-white"></i> VideoShare</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="add_video.html">Add a new video</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h3>Vid&eacute;o : {{video.metadata.title}}</h3>
+        </div>
+            
+        <div class="row-fluid">
+            <div class="span4 well">
+                <strong>Video informations :</strong>
+                <div>Uploaded by : {{video.metadata.userId}}</div>
+                <div>Date : {{video.uploadDate}}</div>
+                <div>File name : {{video.filename}}</div>
+                <div>Size : {{video.size}}</div>
+                <div>Type : {{video.contentType}}</div>
+                <div>Views : {{video.metadata.views}}</div>
+            </div>
+            <div class="span8 well" style="background-color:#fff;text-align:center;">
+                <video controls autoplay ng-src="/videos/content/{{video._id}}"></video>
+            </div>
+        </div>
+      
+        <div class="span10 offset1">
+            <fieldset>
+                <legend>Comments</legend>
+                    <form class="form-inline">
+                        <img src="img/photo.jpg">
+                        <input type="text" class="input-large" id="username" placeholder="Enter your name">
+                        <input type="text" class="input-xxlarge" id="comment" placeholder="Enter your comment here">
+                        <button class="btn" onclick="postComment()">Post</button>
+                    </form>
+            
+                    <div id="comments" ng-controller="CommentController">
+                    <table>
+                        <tbody ng-repeat="comment in comments">
+                        <tr>
+                            <td><img src="img/photo.jpg"></td>
+                            <td>&nbsp;</td>
+                            <td>
+                                <strong>{{comment.userId}}</strong>&nbsp;&nbsp;
+                                <small>{{comment.ts}}</small>
+                                <br><p>{{comment.text}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "videoshare",
+  "description": "App showing how HTML5, NodeJS and MongoDB can run together",
+  "version": "0.0.1",
+  "private": false,
+  "dependencies": {
+    "express": "3.x",
+	"mongodb": "1.x",
+	"websocket": "1.x"
+  }
+}

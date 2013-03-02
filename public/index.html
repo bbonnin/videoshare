@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+    <meta charset="utf-8">
+    <title>VideoShare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VideoShare, html5, angularjs, nodejs, mongodb, couchdb">
+    <meta name="author" content="Bruno Bonnin">
+    
+    <!-- Le styles -->
+    <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <style>
+    body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+    .table-video td {
+        vertical-align : middle;
+    }
+    .thumbnail:hover {
+        border: 1px solid #0088cc;
+    }
+    </style>
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    
+    <script src="lib/jquery/jquery.js"></script>
+    <script src="lib/jquery/jquery.cookie.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/videoshare.js"></script>
+    <script src="js/controllers.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#refreshBtn").click();
+    });
+    </script>
+    
+</head>
+
+<body ng-controller="VideoController">
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="index.html"><i class="icon-film icon-white"></i> VideoShare</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="add_video.html">Add a new video</a></li>
+                    </ul>
+                    <form class="navbar-form form-search pull-right">
+                        <div class="input-append">
+                            <input id="keyword" type="text" class="span2 search-query">
+                            <button type="submit" class="btn" onclick="searchVideos();"><i class="icon-search"></i></button>
+                        </div>
+                    </form>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h3>Welcome to VideoShare</h3>
+        </div>
+      
+        <div class="row">
+            <div class="span12">
+                <form class="well form-inline">
+                    Filter : <input class="input-medium" ng-model="filterVideo">
+                    <button class="btn btn-primary" onClick="refreshVideos()" id="refreshBtn">Refresh videos</button>
+                </form>
+            </div>
+        </div>
+            
+        <div class="row">
+            <div class="span12">
+                <ul class="thumbnails">
+                    <li class="span3" ng-repeat="video in videos | filter:filterVideo">
+                        <div class="thumbnail">
+                            <img ng-src="/videos/snapshot/{{video._id}}"
+                                width="200" style="width:200px;cursor:pointer;" onClick="showVideo('{{video._id}}');"/>
+                            <h5><a href="#" onClick="showVideo('{{video._id}}');"><b>{{video.metadata.title}}</b></a></h5>
+                            <table style="width:100%;">
+                            <tr>
+                                <td>
+                                    <small>
+                                    Uploaded by : {{video.metadata.userId}}<br/>
+                                    Date : {{video.uploadDate}}<br/>
+                                    Views : {{video.metadata.views}}
+                                    </small>
+                                </td>
+                                <td style="text-align:right; vertical-align:bottom;">
+                                    <button class="btn btn-small btn-primary" onClick="showVideo('{{video._id}}');">
+                                        <i class="icon-play icon-white"></i></button>
+                                    <button class="btn btn-small btn-danger" name="delete" 
+                                        onClick="deleteVideo('{{video._id}}', 'refreshVideos()');">
+                                        <i class="icon-trash icon-white"></i></button>
+                                </td>
+                            </tr>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
