@@ -205,9 +205,10 @@ function postComment() {
     if (userId.length == 0) {
         userId = "Anonymous";
     }
+    
     var comment = $("#comment").val();
-      
-    connection.send(JSON.stringify({ action:"post", userId:userId, text:comment, videoId:getVideoId() }));
-        
-    $("#comment").val('');
+    if (comment.length > 0) { 
+        connection.send(JSON.stringify({ action:"post", userId:userId, text:comment, videoId:getVideoId() }));
+        $("#comment").val('');
+    }
 }

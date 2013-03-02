@@ -51,7 +51,7 @@ wsServer.on('request', function(request) {
                     if (!wsConnections[command.videoId]) {
                         wsConnections[command.videoId] = [];
                     }
-                    wsCconnections[command.videoId].push(connection);
+                    wsConnections[command.videoId].push(connection);
                 }
                 else if (command.action === 'list') {
                     videos.getComments(command.videoId, connection);
