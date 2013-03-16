@@ -18,6 +18,12 @@ This project aims to show how some exciting technologies can be put together to 
 
 ## Run
 
+* Start MongoDB
+``` bash
+    mongod --dbpath /path/to/my/db
+```
+
+* Start NodeJS
 ``` bash
      node main
 ```
