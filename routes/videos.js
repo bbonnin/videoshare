@@ -1,6 +1,7 @@
 var mongo = require("mongodb");
 var qs = require("querystring");
 var fs = require('fs');
+require('date-utils');
 
 var BSON = mongo.BSONPure;
 var GridStore = mongo.GridStore;
@@ -223,6 +224,36 @@ VideoServices.prototype.getComments = function(videoId, connection) {
                     connection.sendUTF(JSON.stringify(result.comments.reverse()));
                 }
             });
+    });
+}
+
+VideoServices.prototype.getStatistics = function(req, resp) {
+    var ndays = req.params.ndays;
+    var now = new Date();
+    var begin = Date.today().addDays(-1 * ndays);
+
+    var map = function() {
+        var uplDate = new Date(this.uploadDate.getFullYear(), this.uploadDate.getMonth(), this.uploadDate.getDate());
+        emit(uplDate, 1);
+    };
+    var reduce = function(k, vals) { 
+        var total = 0;
+        for (var i in vals) {
+            total += vals[i];
+		}
+        return total;
+	};
+	
+    this.db.collection("videosfs.files", function(err, collection) {
+        collection.mapReduce(map, reduce, 
+            { out : { inline : 1 }, query : { uploadDate : { $gte : begin, $lte : now } } },
+            function(err, collection) {
+            
+                // return statistics for each day between now and the last n days
+                //
+                resp.send(JSON.stringify(collection));
+            }
+        );
     });
 }
 

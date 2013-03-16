@@ -24,6 +24,7 @@ app.get("/videos/snapshot/:id", videos.getVideoSnapshot.bind(videos));
 app.get("/videos/content/:id", videos.getVideoContent.bind(videos));
 app.get("/videos/:id", videos.findById.bind(videos));
 app.get("/videos", videos.find.bind(videos));
+app.get("/videos/statistics/:ndays", videos.getStatistics.bind(videos));
 app.post("/videos", videos.addVideo.bind(videos));
 app.delete("/videos/:id", videos.deleteVideo.bind(videos));
 

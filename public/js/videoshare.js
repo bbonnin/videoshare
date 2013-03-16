@@ -220,3 +220,31 @@ function postComment() {
         $("#comment").val('');
     }
 }
+
+//***********************************************
+// "Statistics" functions
+//***********************************************
+
+function refreshStats() {
+    getStats(1, "1day");
+    getStats(7, "7days");
+    getStats(30, "30days");
+}
+
+function getStats(ndays, divId) {
+    $.ajax({
+        url : "/videos/statistics/" + ndays, 
+        type : "GET",
+        error : function(jqXHR, textStatus, errorThrown) {
+            alert("Erreur : " + textStatus);
+        },
+        success : function(data, textStatus, jqXHR) {
+            var statsByDay = JSON.parse(data);
+            var total = 0;
+            for (var i=0; i<statsByDay.length; i++) {
+                total += statsByDay[i].value;
+            }
+            $("#" + divId).text(total);
+        }
+    });
+}
