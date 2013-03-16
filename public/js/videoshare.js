@@ -58,8 +58,11 @@ function uploadVideo(event) {
         fd.append("metadata", JSON.stringify(metadata));
             
         fd.append("video", document.getElementById('files').files[0]);
-        fd.append("snapshot", getSnapshot());
-
+        var snapshot = getSnapshot();
+        if (snapshot != null) {
+            fd.append("snapshot", snapshot);
+        }
+        
         xhr.upload.addEventListener("progress", uploadProgress, false);
         xhr.addEventListener("load", uploadComplete, false);
         xhr.addEventListener("error", uploadFailed, false);
@@ -70,8 +73,9 @@ function uploadVideo(event) {
     }
     else {
         showUploadResult("Error : you have to select a video and enter your name and a title");
-        return false;
     }
+    
+    return false;
 }
 
 function getSnapshot() {
@@ -83,9 +87,13 @@ function getSnapshot() {
         
     var ctx = canvas.getContext("2d");
     ctx.drawImage(video, 0,0, canvas.width, canvas.height);
-    var img = canvas.toDataURL("image/png");
-        
-    return img.split(',')[1];
+    try {
+        var img = canvas.toDataURL("image/png");
+        return img.split(',')[1];
+    }
+    catch (e) {
+        return null;
+    }
 }
     
 function uploadProgress(evt) {

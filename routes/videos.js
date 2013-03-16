@@ -60,7 +60,9 @@ VideoServices.prototype.getVideoSnapshot = function(req, resp) {
                     resp.send(decodedImage);
                 }
                 else {
-                    resp.send(404, { error : "Unknown video or no snapshot" });
+                    //resp.send(404, { error : "Unknown video or no snapshot" });
+                    resp.setHeader("Location", "/img/no_snapshot.png");
+                    resp.send(302);
                 }
             });
     });
@@ -130,10 +132,11 @@ VideoServices.prototype.addVideo = function(req, resp) {
     var video_name = req.files.video.name;
     var metadata = JSON.parse(req.body.metadata);
     metadata.views = 0;
-    metadata.snapshot = req.body.snapshot;
     
-    console.log(JSON.stringify(metadata));
-
+    if (req.body.snapshot) {
+        metadata.snapshot = req.body.snapshot;
+    }
+    
     var gs = new GridStore(this.db, video_name, "w", {
             "root" : "videosfs",
             "content_type" : req.files.video.type,

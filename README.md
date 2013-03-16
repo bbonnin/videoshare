@@ -3,7 +3,10 @@ VideoShare
 
 Complete example of "Javascript Everywhere"
 
-This project aims to show how some exciting technologies such as [HTML5](http://www.html5rocks.com/en/), [AngularJS](http://angularjs.org/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [JQuery](http://jquery.com/), [Node.js](http://nodejs.org/), [Express](http://expressjs.com/), [CouchDB](http://couchdb.apache.org/), [MongoDB](http://www.mongodb.org/) ... can be put together to build web applications using a single development language : JavaScript.
+This project aims to show how some exciting technologies can be put together to build web applications using a single development language : JavaScript.
+* [HTML5](http://www.html5rocks.com/en/)(video, canvas, drag&drop, web sockets), [AngularJS](http://angularjs.org/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [JQuery](http://jquery.com/)
+* [Node.js](http://nodejs.org/), [Express](http://expressjs.com/)(REST API)
+* [CouchDB](http://couchdb.apache.org/), [MongoDB](http://www.mongodb.org/)(MapReduce)
 
 ## Installation
 
@@ -16,6 +19,12 @@ This project aims to show how some exciting technologies such as [HTML5](http://
 ``` bash
      node main
 ```
+
+Open your browser, enter http://localhost:8888.
+
+The application has been tester on :
+* Google Chrome v25
+* Firefox v19 (problem with video snapshot : there is a security exception)
 
 ## Todo
 
