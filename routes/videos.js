@@ -233,25 +233,29 @@ VideoServices.prototype.getStatistics = function(req, resp) {
     var begin = Date.today().addDays(-1 * ndays);
 
     var map = function() {
-        var uplDate = new Date(this.uploadDate.getFullYear(), this.uploadDate.getMonth(), this.uploadDate.getDate());
-        emit(uplDate, 1);
+        // Emit only one key to get all the data inside a global object
+        emit("stats", { count : 1, size : this.length });
     };
     var reduce = function(k, vals) { 
-        var total = 0;
+        var nbVideos = 0;
+        var totalSize = 0;
         for (var i in vals) {
-            total += vals[i];
+            nbVideos += vals[i].count;
+            totalSize += vals[i].size;
 		}
-        return total;
+        return { count : nbVideos, size : totalSize };
 	};
 	
     this.db.collection("videosfs.files", function(err, collection) {
         collection.mapReduce(map, reduce, 
             { out : { inline : 1 }, query : { uploadDate : { $gte : begin, $lte : now } } },
             function(err, collection) {
-            
-                // return statistics for each day between now and the last n days
-                //
-                resp.send(JSON.stringify(collection));
+                if (collection.length > 0) {
+                    resp.send(JSON.stringify(collection[0]));
+                }
+                else {
+                    resp.send(JSON.stringify({ count : 0, size : 0 }));
+                }
             }
         );
     });

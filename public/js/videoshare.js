@@ -239,12 +239,12 @@ function getStats(ndays, divId) {
             alert("Erreur : " + textStatus);
         },
         success : function(data, textStatus, jqXHR) {
-            var statsByDay = JSON.parse(data);
-            var total = 0;
-            for (var i=0; i<statsByDay.length; i++) {
-                total += statsByDay[i].value;
+            var stats = JSON.parse(data).value;
+            var avgSize = 0;
+            if (stats.count != 0) {
+                avgSize = stats.size / stats.count;
             }
-            $("#" + divId).text(total);
+            $("#" + divId).text("# of videos : " + stats.count + ", average size : " + avgSize);
         }
     });
 }
