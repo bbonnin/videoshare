@@ -1,14 +1,20 @@
 VideoShare
 ==========
 
-Complete example of "Javascript Everywhere"
+Concrete example of "Javascript Everywhere"
 
 This project aims to show how some exciting technologies can be put together to build web applications using a single development language : JavaScript.
-* [HTML5](http://www.html5rocks.com/en/)(video, canvas, drag&drop, web sockets), [AngularJS](http://angularjs.org/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [JQuery](http://jquery.com/)
+* [HTML5](http://www.html5rocks.com/en/) (video, canvas, drag&drop, web sockets), [AngularJS](http://angularjs.org/), [Twitter Bootstrap](http://twitter.github.com/bootstrap/), [JQuery](http://jquery.com/)
 * [Node.js](http://nodejs.org/), [Express](http://expressjs.com/) (REST API)
 * [CouchDB](http://couchdb.apache.org/), [MongoDB](http://www.mongodb.org/) (MapReduce)
 
 ![Javascript Everywhere](/public/img/overview.png)
+
+VideoShare is a simple web app with basic functions :
+* home page showing last videos and with search function
+* a page playing a video with real-time feebacks (based on websockets)
+* a page for adding new video (using canvas, videos and drag&drop)
+* a page showing basic stats (based on a map-reduce)
 
 ## Installation
 
