@@ -54,7 +54,9 @@ function uploadVideo(event) {
         var xhr = new XMLHttpRequest();
         var fd = new FormData();
             
-        var metadata = { title : $('#title').val(), userId : $('#username').val() };
+        var metadata = { title : $('#title').val(), 
+            userId : $('#username').val(),
+            duration : $('#videoDuration').text() };
         fd.append("metadata", JSON.stringify(metadata));
             
         fd.append("video", document.getElementById('files').files[0]);
@@ -152,10 +154,16 @@ function loadFiles(files) {
             var video = document.getElementById("preview");
             video.src = dataUri;
             video.style.display = "block";
+            video.style.width = "100%";
             $('#msg').text('');
             video.play();
             video.muted = true;
             video.volume = 0;
+        };
+        reader.onloadend = function(event) {
+            setTimeout(function() {
+                $('#videoDuration').text(formatSeconds($('#preview').get(0).duration));
+            }, 3000);
         };
         reader.onerror = function(event) {
             $('#result').html("Error while playing video : " + event.target.error);
@@ -247,4 +255,14 @@ function getStats(ndays, divId) {
             $("#" + divId).text("# of videos : " + stats.count + ", average size : " + avgSize);
         }
     });
+}
+
+//***********************************************
+// "Utils" functions
+//***********************************************
+
+function formatSeconds(seconds) {
+    var date = new Date(1970, 0, 1);
+    date.setSeconds(seconds);
+    return date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
 }

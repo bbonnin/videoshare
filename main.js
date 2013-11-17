@@ -11,7 +11,7 @@ var httpServer = http.createServer(app);
 
 app.configure(function() {
     app.use(express.logger('dev'));
-    app.use(express.limit('5mb'));
+    app.use(express.limit('7mb'));
     app.use(express.bodyParser({ 
         uploadDir: __dirname + '/public/uploads',
         keepExtensions: true }));

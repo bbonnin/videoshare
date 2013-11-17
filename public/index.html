@@ -9,7 +9,6 @@
     
     <!-- Le styles -->
     <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <style>
     body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -20,7 +19,39 @@
     .thumbnail:hover {
         border: 1px solid #0088cc;
     }
+    @media (min-width: 1200px) {
+        .thumbnail {
+            height: 270px;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 1199px) {
+        .thumbnail {
+            height: 250px;
+        }
+    }
+    img.snapshot {
+        margin: 0 auto;
+        display: block;
+        width:100%;
+        cursor:pointer;
+    }
+    span.snapshot {
+        opacity: 0.75;
+        font-weight: bold;
+        font-size: 11px;
+        padding: 0 4px;
+        background-color: #000;
+        color: #fff!important;
+        height: 14px;
+        line-height: 14px;
+        vertical-align: top;
+        display: inline-block;
+        right: 2px;
+        bottom: 2px;
+        position: absolute;
+    }
     </style>
+    <link href="lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -57,6 +88,7 @@
                 <a class="brand" href="index.html"><i class="icon-film icon-white"></i> VideoShare</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
+                        <li class="active"><a href="index.html">Home</a></li>
                         <li><a href="add_video.html">Add a new video</a></li>
                         <li><a href="statistics.html">Statistics</a></li>
                     </ul>
@@ -91,8 +123,12 @@
                 <ul class="thumbnails">
                     <li class="span3" ng-repeat="video in videos | filter:filterVideo">
                         <div class="thumbnail">
-                            <img ng-src="/videos/snapshot/{{video._id}}"
-                                width="200" style="width:200px;cursor:pointer;" onClick="showVideo('{{video._id}}');"/>
+                            <div style="position:relative;">
+                                <img ng-src="/videos/snapshot/{{video._id}}"
+                                    width="200" class="snapshot" 
+                                    onClick="showVideo('{{video._id}}');"/>
+                                <span class="snapshot">{{video.metadata.duration}}</span>
+                            </div>
                             <h5><a href="#" onClick="showVideo('{{video._id}}');"><b>{{video.metadata.title}}</b></a></h5>
                             <table style="width:100%;">
                             <tr>

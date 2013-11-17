@@ -60,6 +60,7 @@
             $('#fileName').text('');
             $('#fileSize').text('');
             $('#fileType').text('');
+            $('#videoDuration').text('');
             $('#preview').hide();
             $('#preview')[0].src = '';
             $('#addVideoForm')[0].reset();
@@ -83,6 +84,7 @@
                 <a class="brand" href="index.html"><i class="icon-film icon-white"></i> VideoShare</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
+                        <li><a href="index.html">Home</a></li>
                         <li class="active"><a href="add_video.html">Add a new video</a></li>
                         <li><a href="statistics.html">Statistics</a></li>
                     </ul>
@@ -116,6 +118,7 @@
                 <div>File name : <span id="fileName"></span></div>
                 <div>Size : <span id="fileSize"></span></div>
                 <div>Type : <span id="fileType"></span></div>
+                <div>Duration : <span id="videoDuration"></span></div>
             </div>
             <div class="span8 well" style="background-color:#fff;">
                 <span id="msg"></span>
